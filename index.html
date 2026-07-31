@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Nepal Census Atlas 2011 · Jonathan Witcoski</title>
+    <title>Nepal Census Atlas 2011 · Between War and Quake</title>
     <meta
       name="description"
-      content="Interactive district atlas of Nepal's 2011 census — a GIS portfolio piece by Jonathan Witcoski showcasing spatial ETL, choropleth mapping, and census geography."
+      content="A scrollytelling district story map of Nepal's 2011 census — the country between civil war and earthquake, told through literacy, electricity, migration, and density."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -21,94 +21,277 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div class="app">
-      <aside class="panel" aria-label="Atlas controls">
-        <header class="brand">
-          <p class="brand-mark">Jonathan Witcoski</p>
-          <h1>Nepal Census Atlas</h1>
-          <p class="lede">
-            2011 National Population &amp; Housing Census, remapped as a modern
-            district GIS lab — spatial join, rate construction, and interactive
-            choropleth.
-          </p>
-        </header>
-
-        <label class="field">
-          <span>Mapped indicator</span>
-          <select id="metric"></select>
-        </label>
-
-        <div class="legend" id="legend" aria-live="polite"></div>
-
-        <dl class="national" id="national">
-          <div>
-            <dt>Districts</dt>
-            <dd>—</dd>
-          </div>
-          <div>
-            <dt>Population</dt>
-            <dd>—</dd>
-          </div>
-          <div>
-            <dt>Median literacy</dt>
-            <dd>—</dd>
-          </div>
-        </dl>
-
-        <article class="detail" id="detail" hidden>
-          <h2 id="detail-title">District</h2>
-          <p class="detail-meta" id="detail-meta"></p>
-          <dl id="detail-stats"></dl>
-        </article>
-
-        <footer class="panel-foot">
-          <p>
-            Built to showcase census-geography ETL &amp; web GIS —
-            <a href="https://witcoskitech.com/" rel="noopener">witcoskitech.com</a>
-          </p>
-        </footer>
-      </aside>
-
-      <main class="map-shell">
+    <div class="story">
+      <aside class="map-stage" aria-hidden="false">
         <div id="map" role="application" aria-label="Nepal district choropleth map"></div>
         <div class="map-chrome">
-          <p class="map-kicker">Pre-federal 75 districts · CBS 2011</p>
-          <div class="map-actions">
-            <button type="button" id="reset-view">Reset view</button>
+          <label class="chapter-nav">
+            <span class="chapter-nav-label">Go to</span>
+            <select id="chapter-nav" aria-label="Jump to chapter">
+              <option value="hero">Prologue</option>
+              <option value="civil-war">Chapter 1 · War hills</option>
+              <option value="three-nepals">Chapter 2 · Three Nepals</option>
+              <option value="tarai-literacy">Chapter 3 · Tarai</option>
+              <option value="absent-men">Chapter 4 · Absent men</option>
+              <option value="valley-quake">Chapter 5 · The Valley</option>
+              <option value="explore">Explore</option>
+            </select>
+          </label>
+          <div class="legend" id="legend" aria-live="polite"></div>
+          <div class="shake-legend" id="shake-legend" hidden>
+            <p class="legend-title">2015 danger zone · MMI</p>
+            <div class="shake-scale" aria-hidden="true">
+              <span style="background:#fca5a5">5</span>
+              <span style="background:#ef4444">6</span>
+              <span style="background:#b91c1c;color:#fff8f0">7</span>
+              <span style="background:#7f1d1d;color:#fff8f0">8</span>
+            </div>
+            <p class="shake-credit">USGS ShakeMap · red = stronger shaking</p>
+          </div>
+          <button type="button" id="reset-view" class="reset-view">Nepal</button>
+          <button type="button" id="quake-wiki-btn" class="quake-wiki-btn" hidden>
+            Wikipedia · Earthquake
+          </button>
+        </div>
+        <div
+          class="wiki-panel"
+          id="wiki-panel"
+          hidden
+          role="complementary"
+          aria-label="Wikipedia summary"
+        >
+          <div class="wiki-panel-head">
+            <p class="wiki-kicker">From Wikipedia</p>
+            <button type="button" class="wiki-close" id="wiki-close" aria-label="Close Wikipedia panel">
+              Close
+            </button>
+          </div>
+          <div class="wiki-panel-body" id="wiki-panel-body">
+            <p class="wiki-loading">Loading Wikipedia summary…</p>
           </div>
         </div>
+      </aside>
+
+      <main class="narrative">
+        <section class="step hero-step" id="chapter-0" data-chapter="hero">
+          <p class="brand-mark">Jonathan Witcoski · GIS Architect</p>
+          <h1>Nepal Census Atlas</h1>
+          <p class="hero-lede">
+            A thin Himalayan republic pressed between India and China — home to
+            Kathmandu and Mount Everest — seen here through the 2011 census, five
+            years after civil war and four years before the Gorkha earthquake.
+          </p>
+
+          <figure class="world-locator" aria-label="Natural Earth locator map: Nepal between India and China">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 340" role="img" aria-label="Natural Earth map of China, India, and Nepal">
+              <rect width="420" height="340" fill="#0c221c" rx="14"/>
+              <text x="18" y="28" fill="#e2b15a" font-size="11" font-family="Sora,sans-serif" letter-spacing="0.14em">NATURAL EARTH | CHINA | INDIA | NEPAL</text>
+              <path fill="#2a5a4a" stroke="#6f8f82" stroke-width="0.8" d="M98.3,101.8L101.5,96.9L107.1,84.4L113.6,72.6L126.9,71.9L131.5,65.4L137.5,61.1L143.3,68.3L154.4,75.2L154.2,84.6L167.5,86.4L177.1,90.7L182.5,99.6L199.1,100.8L211.2,100.8L225.3,104.4L233.7,103.0L250.0,100.8L259.9,95.6L262.7,91.7L263.8,85.6L272.1,87.4L285.3,82.0L292.8,76.4L304.5,76.3L300.4,70.1L292.1,70.4L284.0,70.3L286.4,62.0L295.2,59.8L302.5,53.5L310.1,45.4L307.2,40.8L318.0,36.8L332.8,38.4L340.6,46.5L344.4,52.6L355.5,60.2L363.8,69.9L376.3,67.6L382.2,71.1L378.3,79.7L368.5,84.4L365.4,91.5L361.9,98.5L358.6,98.1L348.4,103.9L344.7,106.7L338.6,109.1L328.6,116.0L317.4,120.4L314.6,119.3L317.6,113.1L310.3,112.1L301.2,119.9L293.4,123.0L300.4,127.9L304.7,132.2L315.2,130.3L319.5,133.5L309.6,138.3L301.8,145.4L309.5,154.4L316.3,164.3L312.9,170.2L317.2,175.2L315.1,184.6L308.4,191.4L299.3,206.1L284.8,216.5L275.7,219.8L270.9,220.8L258.1,224.6L253.4,231.1L253.2,224.6L243.7,223.7L236.0,219.8L232.0,215.3L225.0,216.3L215.8,216.9L210.3,219.2L208.3,225.8L207.6,222.0L201.5,222.6L199.2,215.5L194.6,209.0L189.7,203.0L194.9,193.3L192.4,187.4L187.6,184.4L183.8,181.0L177.6,179.9L167.2,182.1L158.2,187.2L153.1,185.5L146.5,185.6L142.6,185.4L133.4,186.1L123.2,182.1L117.4,178.2L109.1,173.5L102.8,173.1L90.4,165.3L92.6,159.6L90.7,153.6L85.6,142.0L75.5,135.1L70.7,130.7L70.1,125.1L65.2,124.3L65.3,117.5L69.6,113.4L78.8,113.0L87.5,108.6L97.6,103.1L98.3,101.8Z"/>
+              <path fill="#3a6a52" stroke="#6f8f82" stroke-width="0.8" d="M187.6,184.4L186.2,187.7L182.9,190.2L176.3,197.6L173.1,205.4L166.7,208.9L165.3,217.0L163.3,220.8L159.1,211.6L155.4,212.3L159.3,208.6L158.7,202.6L148.9,201.9L145.9,197.5L139.9,199.0L140.4,204.3L142.5,208.0L143.4,215.9L143.5,222.9L133.5,224.0L131.0,231.9L117.6,242.8L108.4,250.3L105.8,254.4L98.7,256.8L98.2,268.9L96.2,279.4L93.5,289.6L92.7,296.0L86.2,301.7L79.1,297.9L74.7,283.7L70.1,275.3L67.9,264.4L61.0,244.9L59.4,230.3L50.8,228.4L40.3,220.5L41.2,216.1L38.6,207.2L49.0,202.2L45.5,194.7L47.9,186.0L59.4,180.3L67.8,168.4L72.1,160.9L66.1,154.0L66.8,146.3L80.6,146.9L91.3,148.8L92.8,156.6L88.9,158.8L95.5,169.0L99.5,175.8L102.5,183.5L114.2,189.6L124.4,193.4L134.8,195.3L139.7,192.9L139.5,186.6L143.1,190.0L148.0,193.4L155.7,192.9L160.3,189.1L162.4,186.5L173.2,178.4L181.3,177.4L182.0,183.5L187.6,184.4Z"/>
+              <path fill="#c9852a" stroke="#fff8f0" stroke-width="1.8" d="M139.5,186.6L139.0,189.1L139.7,192.9L139.1,195.2L134.8,195.3L128.5,193.9L124.4,193.4L121.4,190.4L114.2,189.6L107.4,186.3L102.5,183.5L97.4,181.2L99.5,175.8L102.8,173.1L104.9,171.7L109.1,173.5L114.4,177.3L117.4,178.2L119.1,181.0L123.2,182.1L127.4,184.7L133.4,186.1L139.5,186.6Z"/>
+              <text x="242" y="128" text-anchor="middle" fill="#d7ebe1" font-size="18" font-family="Fraunces,Georgia,serif" font-weight="700">CHINA</text>
+              <text x="242" y="144" text-anchor="middle" fill="#a9c4b8" font-size="9" font-family="Sora,sans-serif" letter-spacing="0.08em">nuclear power</text>
+              <text x="104" y="231" text-anchor="middle" fill="#d7ebe1" font-size="18" font-family="Fraunces,Georgia,serif" font-weight="700">INDIA</text>
+              <text x="104" y="247" text-anchor="middle" fill="#a9c4b8" font-size="9" font-family="Sora,sans-serif" letter-spacing="0.08em">nuclear power</text>
+              <circle cx="118.6" cy="183.5" r="3.5" fill="#9e1528"/>
+              <text x="145" y="188" fill="#fff8f0" font-size="12" font-family="Sora,sans-serif" font-weight="700">NEPAL</text>
+              <text x="18" y="324" fill="#9eb5aa" font-size="10" font-family="Sora,sans-serif">Public domain boundaries · Natural Earth 110m</text>
+            </svg>
+            <figcaption>
+              Nepal is landlocked between India and China — Asia’s two nuclear
+              powers — with Kathmandu in the Valley and Everest on the northern crest.
+              Boundaries from Natural Earth 110m (public domain).
+            </figcaption>
+          </figure>
+
+          <div class="step-nav">
+            <a class="scroll-cta" href="#chapter-1">Begin the story</a>
+          </div>
+        </section>
+
+        <section class="step" id="chapter-1" data-chapter="civil-war">
+          <p class="step-kicker">Chapter 1</p>
+          <h2>Where the war was fought</h2>
+          <p>
+            Nepal’s civil war (1996–2006) did not burn evenly across the map. The
+            Maoist insurgency took root in the Mid-Western hills — Rolpa, Rukum,
+            Jajarkot — then spread through Karnali and the Far West, places long
+            distant from Kathmandu’s roads, schools, and power lines.
+          </p>
+          <p>
+            The census cannot explain why the rebellion began. It can show what
+            those districts still looked like five years after the peace: electric
+            lighting in about 4% of Jajarkot households, 15% in Rukum, 21% in
+            Rolpa. Wood cooked nearly every meal.
+          </p>
+          <p class="punchline">
+            The war’s heartland was also the country’s darkest belt of households.
+          </p>
+          <div class="step-nav">
+            <button type="button" class="wiki-open">
+              Wikipedia · Nepalese Civil War
+            </button>
+            <a class="next-btn" href="#chapter-2">Next · Three Nepals</a>
+          </div>
+        </section>
+
+        <section class="step" id="chapter-2" data-chapter="three-nepals">
+          <p class="step-kicker">Chapter 2</p>
+          <h2>One country, three Nepals</h2>
+          <p>
+            Pull back from the conflict hills and the 2011 census shows a wider
+            fracture. Literacy and household services did not form one national
+            gradient — they split across Nepal’s three belts: the high Mountains,
+            the Mid Hills, and the Tarai plains.
+          </p>
+          <p class="punchline">
+            National median literacy sat at 65%. The map shows how uneven that
+            average was.
+          </p>
+          <div class="step-nav">
+            <a class="next-btn" href="#chapter-3">Next · The Tarai</a>
+          </div>
+        </section>
+
+        <section class="step" id="chapter-3" data-chapter="tarai-literacy">
+          <p class="step-kicker">Chapter 3</p>
+          <h2>Dense, and left behind</h2>
+          <p>
+            The central Tarai is Nepal’s crowded lowland belt — flat, fertile, and
+            threaded by the East–West Highway. After mid-century malaria control,
+            settlement surged. People and commerce piled onto the plains long before
+            schools and state services caught up.
+          </p>
+          <p>
+            That is why density here does not look like Kathmandu’s advantage.
+            Madhesi districts were long peripheral to a hill-centered state: Nepali
+            as the language of schooling, thinner public investment, agrarian child
+            labor, and especially low schooling for girls. The 2011 census records
+            the result — Rautahat at 42% literacy and 44% school attendance
+            (ages 5–25), with female literacy only 32%.
+          </p>
+          <p class="punchline">
+            Roads move goods. They do not automatically move literacy.
+          </p>
+          <div class="step-nav">
+            <a class="next-btn" href="#chapter-4">Next · Absent men</a>
+          </div>
+        </section>
+
+        <section class="step" id="chapter-4" data-chapter="absent-men">
+          <p class="step-kicker">Chapter 4</p>
+          <h2>The men who left</h2>
+          <p>
+            Sex ratios plunge across the western hills: Gulmi at 75 men per 100
+            women, Syangja 77, Rolpa 83. The census counts who remained — women,
+            children, elders — while labor migration pulled working-age men abroad
+            and to the cities.
+          </p>
+          <p class="punchline">
+            Absence is a demographic signature of remittance Nepal.
+          </p>
+          <div class="step-nav">
+            <button type="button" class="wiki-open">
+              Wikipedia · Remittances to Nepal
+            </button>
+            <a class="next-btn" href="#chapter-5">Next · The Valley</a>
+          </div>
+        </section>
+
+        <section class="step" id="chapter-5" data-chapter="valley-quake">
+          <p class="step-kicker">Chapter 5</p>
+          <h2>The Valley before the quake</h2>
+          <p>
+            This choropleth is still 2011. Overlaid are USGS ShakeMap intensity
+            contours from 25 April 2015 — the Mw 7.8 Gorkha earthquake — with the
+            epicenter marked near Barpak, Gorkha. The census cannot show collapsed
+            buildings; it can show how densely people already clustered in the
+            Valley the quake would reach: Kathmandu ~4,100 / km², Bhaktapur 2,400,
+            Lalitpur 1,200.
+          </p>
+          <p>
+            Services clustered here too. When the ground shook four years later, it
+            shook a capital that already held the country’s densest risk — inside
+            bands of strong shaking (MMI 5–8).
+          </p>
+          <p class="punchline">
+            Vulnerability was visible before the disaster had a date.
+          </p>
+          <div class="step-nav">
+            <button type="button" class="wiki-open">
+              Wikipedia · April 2015 Nepal earthquake
+            </button>
+            <a class="next-btn" href="#chapter-explore">Next · Explore</a>
+          </div>
+        </section>
+
+        <section class="step explore-step" id="chapter-explore" data-chapter="explore">
+          <p class="step-kicker">Explore</p>
+          <h2>Read any district</h2>
+          <p>
+            The narrative ends; the atlas stays open. Choose an indicator, hover
+            a district, click for the full 2011 profile — then scroll on for why
+            this kind of map belongs in a portfolio.
+          </p>
+
+          <label class="field">
+            <span>Mapped indicator</span>
+            <select id="metric"></select>
+          </label>
+
+          <dl class="national" id="national">
+            <div>
+              <dt>Districts</dt>
+              <dd>—</dd>
+            </div>
+            <div>
+              <dt>Population</dt>
+              <dd>—</dd>
+            </div>
+            <div>
+              <dt>Median literacy</dt>
+              <dd>—</dd>
+            </div>
+          </dl>
+
+          <article class="detail" id="detail" hidden>
+            <h3 id="detail-title">District</h3>
+            <p class="detail-meta" id="detail-meta"></p>
+            <dl id="detail-stats"></dl>
+          </article>
+        </section>
       </main>
     </div>
 
     <section class="skills" id="skills">
       <div class="skills-inner">
         <p class="skills-brand">Vector Scope AI · GIS Architect</p>
-        <h2>What this old census repo becomes in 2026</h2>
+        <h2>Maps that carry a story</h2>
         <p>
-          The 2011 Nepal census is frozen history. The craft is not the year —
-          it is turning messy administrative tables into trustworthy geography.
+          This project sits in my portfolio because it shows the full loop:
+          take imperfect public data, make it geographically trustworthy, then
+          pace it so a reader understands a place — not just a color ramp.
         </p>
-        <ul>
-          <li>
-            <strong>Toponym reconciliation</strong>
-            Explicit CBS ↔ GADM aliases so Chitwan/Chitawan and Kavre/Kavrepalanchok join cleanly.
-          </li>
-          <li>
-            <strong>Aggregate-before-rate</strong>
-            VDC counts are summed first; literacy and service rates are rebuilt at district scale.
-          </li>
-          <li>
-            <strong>Geodesic density</strong>
-            Population density uses WGS84 ellipsoid area, not planar degree math.
-          </li>
-          <li>
-            <strong>Cartographic delivery</strong>
-            Quantile class breaks, simplified polygons, MapLibre choropleth with live district inspection.
-          </li>
-        </ul>
+        <p>
+          The 2011 Nepal census is frozen history. What matters is the method.
+          Names reconciled across CBS and GADM. Counts aggregated before rates.
+          Density measured on the ellipsoid. Districts drawn so you can inspect
+          them. Then the map becomes chapters: war-era hills, three belts,
+          Tarai schooling, absent men, a valley before the quake.
+        </p>
+        <p>
+          That is how I work as a GIS architect — data and cartography as
+          narrative structure. Scroll changes the question. Hover isolates a
+          region. Click opens evidence. Context stays honest because the
+          indicators never pretend to prove what they cannot.
+        </p>
         <p class="skills-cta">
-          Re-run the pipeline:
-          <code>python3 etl/build_district_atlas.py</code>
+          More work and contact:
+          <a href="https://witcoskitech.com/" rel="noopener">witcoskitech.com</a>
+        </p>
+        <p class="skills-credit">
+          Sources: CBS NPHC 2011 via Code for Nepal · district boundaries GADM / anjesh/NepalMaps ·
+          rebuild with <code>python3 etl/build_district_atlas.py</code>
         </p>
       </div>
     </section>
