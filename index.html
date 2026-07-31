@@ -6,7 +6,7 @@
     <title>Nepal Census Atlas 2011 · Jonathan Witcoski</title>
     <meta
       name="description"
-      content="Interactive district atlas of Nepal's 2011 census — a GIS portfolio piece by Jonathan Witcoski showcasing spatial ETL, choropleth mapping, and census geography."
+      content="A story dashboard of Nepal's 2011 census — linked maps and charts by Jonathan Witcoski."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -21,99 +21,164 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div class="app">
-      <aside class="panel" aria-label="Atlas controls">
-        <header class="brand">
-          <p class="brand-mark">Jonathan Witcoski</p>
-          <h1>Nepal Census Atlas</h1>
-          <p class="lede">
-            2011 National Population &amp; Housing Census, remapped as a modern
-            district GIS lab — spatial join, rate construction, and interactive
-            choropleth.
-          </p>
-        </header>
-
-        <label class="field">
-          <span>Mapped indicator</span>
-          <select id="metric"></select>
-        </label>
-
-        <div class="legend" id="legend" aria-live="polite"></div>
-
-        <dl class="national" id="national">
-          <div>
-            <dt>Districts</dt>
-            <dd>—</dd>
-          </div>
-          <div>
-            <dt>Population</dt>
-            <dd>—</dd>
-          </div>
-          <div>
-            <dt>Median literacy</dt>
-            <dd>—</dd>
-          </div>
-        </dl>
-
-        <article class="detail" id="detail" hidden>
-          <h2 id="detail-title">District</h2>
-          <p class="detail-meta" id="detail-meta"></p>
-          <dl id="detail-stats"></dl>
-        </article>
-
-        <footer class="panel-foot">
-          <p>
-            Built to showcase census-geography ETL &amp; web GIS —
-            <a href="https://witcoskitech.com/" rel="noopener">witcoskitech.com</a>
-          </p>
-        </footer>
-      </aside>
-
-      <main class="map-shell">
-        <div id="map" role="application" aria-label="Nepal district choropleth map"></div>
-        <div class="map-chrome">
-          <p class="map-kicker">Pre-federal 75 districts · CBS 2011</p>
-          <div class="map-actions">
-            <button type="button" id="reset-view">Reset view</button>
-          </div>
+    <header class="hero">
+      <div class="hero-copy">
+        <p class="brand-mark">Jonathan Witcoski · GIS Architect</p>
+        <h1>Nepal Census Atlas</h1>
+        <p class="lede">
+          Twenty-six million people, seventy-five districts, one frozen census year —
+          remapped as a story you can click through.
+        </p>
+        <div class="hero-cta">
+          <a class="btn" href="#story-people">Start the story</a>
+          <button type="button" class="btn btn-ghost" id="toggle-metric-label">
+            Map: population density
+          </button>
         </div>
-      </main>
-    </div>
+      </div>
+      <div class="hero-map">
+        <div id="map" role="application" aria-label="Nepal district choropleth map"></div>
+        <div class="map-overlay">
+          <label class="map-metric">
+            <span>Map layer</span>
+            <select id="metric"></select>
+          </label>
+          <div class="legend" id="legend"></div>
+          <article class="district-card" id="detail" hidden>
+            <h2 id="detail-title">District</h2>
+            <p id="detail-meta"></p>
+            <dl id="detail-stats"></dl>
+          </article>
+        </div>
+      </div>
+    </header>
 
-    <section class="skills" id="skills">
-      <div class="skills-inner">
-        <p class="skills-brand">Vector Scope AI · GIS Architect</p>
-        <h2>What this old census repo becomes in 2026</h2>
-        <p>
-          The 2011 Nepal census is frozen history. The craft is not the year —
-          it is turning messy administrative tables into trustworthy geography.
-        </p>
-        <ul>
-          <li>
-            <strong>Toponym reconciliation</strong>
-            Explicit CBS ↔ GADM aliases so Chitwan/Chitawan and Kavre/Kavrepalanchok join cleanly.
-          </li>
-          <li>
-            <strong>Aggregate-before-rate</strong>
-            VDC counts are summed first; literacy and service rates are rebuilt at district scale.
-          </li>
-          <li>
-            <strong>Geodesic density</strong>
-            Population density uses WGS84 ellipsoid area, not planar degree math.
-          </li>
-          <li>
-            <strong>Cartographic delivery</strong>
-            Quantile class breaks, simplified polygons, MapLibre choropleth with live district inspection.
-          </li>
-        </ul>
-        <p class="skills-cta">
-          Re-run the pipeline:
-          <code>python3 etl/build_district_atlas.py</code>
-        </p>
+    <section class="kpi-band" aria-label="National snapshot">
+      <div class="kpi" data-kpi="population">
+        <span>People counted</span>
+        <strong id="kpi-pop">—</strong>
+      </div>
+      <div class="kpi" data-kpi="districts">
+        <span>Districts</span>
+        <strong id="kpi-dist">75</strong>
+      </div>
+      <div class="kpi" data-kpi="density">
+        <span>National density</span>
+        <strong id="kpi-dens">—</strong>
+      </div>
+      <div class="kpi" data-kpi="literacy">
+        <span>Median literacy</span>
+        <strong id="kpi-lit">—</strong>
       </div>
     </section>
 
+    <main class="story">
+      <section class="chapter" id="story-people" data-metric="population">
+        <div class="chapter-copy">
+          <p class="chapter-kicker">01 · Where people are</p>
+          <h2>Kathmandu alone holds more people than the six thinnest mountain districts combined.</h2>
+          <p>
+            The 2011 census paints a country pulled toward the Valley and the Terai.
+            Click a bar to spotlight that district on the map.
+          </p>
+        </div>
+        <div class="chapter-viz">
+          <canvas id="chart-population" height="320" aria-label="Top districts by population"></canvas>
+        </div>
+      </section>
+
+      <section class="chapter chapter-split" id="story-contrast" data-metric="pop_density">
+        <div class="chapter-copy">
+          <p class="chapter-kicker">02 · Two Nepals</p>
+          <h2>Same census. Different worlds.</h2>
+          <p>
+            Kathmandu’s density is about <em>500×</em> Humla’s. Literacy, electric light,
+            and flush toilets follow the same ridge line.
+          </p>
+          <div class="contrast" id="contrast-cards"></div>
+        </div>
+        <div class="chapter-viz">
+          <canvas id="chart-contrast" height="320" aria-label="Kathmandu versus Humla indicators"></canvas>
+        </div>
+      </section>
+
+      <section class="chapter" id="story-literacy" data-metric="literacy_rate">
+        <div class="chapter-copy">
+          <p class="chapter-kicker">03 · Literacy &amp; living standards</p>
+          <h2>Where people can read, flush toilets show up too.</h2>
+          <p>
+            District literacy and flush-toilet access move together (r ≈ 0.71).
+            Hover a point — the map jumps with you.
+          </p>
+        </div>
+        <div class="chapter-viz">
+          <canvas id="chart-scatter" height="340" aria-label="Literacy versus flush toilet scatterplot"></canvas>
+        </div>
+      </section>
+
+      <section class="chapter" id="story-power" data-metric="electricity_lighting_pct">
+        <div class="chapter-copy">
+          <p class="chapter-kicker">04 · Power &amp; gap</p>
+          <h2>In Jajarkot, only 4% of households lit with electricity.</h2>
+          <p>
+            The Valley is nearly universal. Parts of Bheri and Karnali are still in single digits.
+            This is the map of who got wired by 2011.
+          </p>
+        </div>
+        <div class="chapter-viz">
+          <canvas id="chart-electricity" height="320" aria-label="Lowest electricity access districts"></canvas>
+        </div>
+      </section>
+
+      <section class="chapter" id="story-gender" data-metric="female_literacy_rate">
+        <div class="chapter-copy">
+          <p class="chapter-kicker">05 · The gender gap</p>
+          <h2>Female literacy trails male literacy by nearly 9 points on average.</h2>
+          <p>
+            The widest gaps sit in the hills and far west. Narrowest in the Valley —
+            still not zero.
+          </p>
+        </div>
+        <div class="chapter-viz">
+          <canvas id="chart-gender" height="340" aria-label="Male versus female literacy by district"></canvas>
+        </div>
+      </section>
+
+      <section class="chapter chapter-explore" id="story-explore" data-metric="literacy_rate">
+        <div class="chapter-copy">
+          <p class="chapter-kicker">06 · Explore</p>
+          <h2>Pick an indicator. Rank every district.</h2>
+          <p>This is the analyst view — full ranking tied to the live map layer.</p>
+          <label class="inline-field">
+            <span>Rank by</span>
+            <select id="rank-metric"></select>
+          </label>
+        </div>
+        <div class="chapter-viz">
+          <canvas id="chart-rank" height="420" aria-label="Full district ranking"></canvas>
+        </div>
+      </section>
+    </main>
+
+    <footer class="skills">
+      <div class="skills-inner">
+        <p class="skills-brand">Vector Scope AI · built by Jonathan Witcoski</p>
+        <h2>Old census. Modern GIS craft.</h2>
+        <p>
+          Toponym reconciliation, aggregate-before-rate ETL, geodesic density,
+          quantile choropleths, and linked map–chart storytelling — from a repo that
+          used to be an empty README.
+        </p>
+        <p class="skills-cta">
+          Pipeline: <code>python3 etl/build_district_atlas.py</code>
+          ·
+          <a href="https://witcoskitech.com/" rel="noopener">witcoskitech.com</a>
+        </p>
+      </div>
+    </footer>
+
     <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
     <script src="app.js"></script>
   </body>
 </html>

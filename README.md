@@ -2,11 +2,11 @@
 
 **Jonathan Witcoski** · GIS Architect · [witcoskitech.com](https://witcoskitech.com/)
 
-Interactive district atlas that turns Nepal’s **2011 National Population & Housing Census** into a modern spatial data product — reproducible Python ETL, geodesic density, quantile choropleths, and a MapLibre web map.
+Interactive **story dashboard** that turns Nepal’s **2011 National Population & Housing Census** into a modern spatial data product — reproducible Python ETL, geodesic density, linked MapLibre + Chart.js chapters, and quantile choropleths.
 
 > This repository started in 2015 as a placeholder. The census year is historical; the workflow is the portfolio piece: **how a GIS developer makes old administrative data trustworthy and mappable.**
 
-## Live map
+## Live dashboard
 
 Open [`index.html`](./index.html) via any static server (GitHub Pages works from the repo root):
 
@@ -14,6 +14,15 @@ Open [`index.html`](./index.html) via any static server (GitHub Pages works from
 python3 -m http.server 8080
 # → http://localhost:8080
 ```
+
+Story chapters:
+
+1. Where people are (top population bars → map)
+2. Two Nepals — Kathmandu vs Humla radar contrast
+3. Literacy ↔ flush toilets scatter (r ≈ 0.71)
+4. Electricity gaps (lowest-access districts)
+5. Gender literacy gap
+6. Full district rank explorer
 
 ## What it demonstrates
 
@@ -24,6 +33,7 @@ python3 -m http.server 8080
 | Aggregate-before-rate | VDC rows summed; literacy & service **rates rebuilt** at district scale |
 | Spatial metrics | WGS84 geodesic area (`pyproj.Geod`) → people / km² |
 | Cartographic classification | Quantile breaks in `data/processed/atlas_metadata.json` |
+| Story dashboard / BI | Chart.js chapters with click-to-map brushing |
 | Web GIS delivery | MapLibre choropleth, hover state, district inspector |
 
 ## Pipeline
@@ -46,7 +56,7 @@ Outputs:
 
 ## Mapped indicators
 
-Population density · literacy · female literacy · electric lighting · flush toilets · improved drinking water · school attendance (5–25) · mobile-phone households · sex ratio
+Population · density · literacy · female literacy · electric lighting · flush toilets · improved drinking water · school attendance (5–25) · mobile-phone households · sex ratio
 
 ## Sources & credit
 
