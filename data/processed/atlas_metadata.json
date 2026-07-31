@@ -1,0 +1,103 @@
+{
+  "title": "Nepal 2011 Census District Atlas",
+  "author": "Jonathan Witcoski",
+  "census_year": 2011,
+  "geography": "75 pre-federal districts (VDC-era)",
+  "sources": {
+    "attributes": "Code for Nepal districts_complete.csv (derived from CBS National Population and Housing Census 2011)",
+    "boundaries": "anjesh/NepalMaps districts GeoJSON (GADM administrative boundaries, CC BY 3.0)"
+  },
+  "methods": [
+    "Toponym normalization with explicit CBS\u2194GADM aliases",
+    "VDC/municipality \u2192 district sum aggregation (never average of rates)",
+    "WGS84 geodesic polygon area via pyproj.Geod",
+    "Population density = population / area_km2",
+    "Quantile (equal-count) class breaks for choropleth legends",
+    "Topology-preserving geometry simplification for web delivery"
+  ],
+  "national": {
+    "districts": 75,
+    "population": 26253098,
+    "households": 5423132,
+    "area_km2": 147662.7,
+    "pop_density": 177.8,
+    "median_literacy_rate": 65.16
+  },
+  "quantile_breaks": {
+    "pop_density": [
+      73.36,
+      136.94,
+      180.74,
+      361.24
+    ],
+    "literacy_rate": [
+      55.426,
+      62.6,
+      68.844,
+      72.462
+    ],
+    "female_literacy_rate": [
+      43.718,
+      53.554,
+      60.836,
+      65.774
+    ],
+    "electricity_lighting_pct": [
+      27.686,
+      53.21,
+      69.446,
+      81.088
+    ],
+    "flush_toilet_pct": [
+      17.84,
+      30.552,
+      38.428,
+      46.794
+    ],
+    "improved_water_pct": [
+      70.83,
+      80.12,
+      87.95,
+      92.444
+    ],
+    "school_attendance_pct": [
+      65.674,
+      70.526,
+      72.552,
+      73.876
+    ],
+    "mobile_phone_hh_pct": [
+      44.438,
+      55.598,
+      62.496,
+      71.0
+    ],
+    "internet_hh_pct": [
+      0.31,
+      0.49,
+      0.808,
+      1.652
+    ],
+    "sex_ratio": [
+      85.38,
+      89.42,
+      92.74,
+      98.54
+    ],
+    "population": [
+      144734.4,
+      215622.2,
+      295385.4,
+      575421.0
+    ]
+  },
+  "skills_highlighted": [
+    "Census geography ETL",
+    "Spatial join / attribute join",
+    "Toponym reconciliation",
+    "Rate construction from micro-aggregates",
+    "Equal-area density mapping",
+    "Choropleth classification",
+    "Web-map data engineering"
+  ]
+}
