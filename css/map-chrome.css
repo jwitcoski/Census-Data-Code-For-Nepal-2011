@@ -1,0 +1,232 @@
+/* Map overlays: chapter nav, legend, shake chrome, utility buttons. */
+
+.map-chrome {
+  position: absolute;
+  z-index: 2;
+  top: 1.1rem;
+  right: 1.1rem;
+  left: 1.1rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 0.75rem;
+  pointer-events: none;
+}
+
+.chapter-nav {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.45rem 0.35rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(15, 42, 34, 0.88);
+  border: 1px solid rgba(255, 252, 245, 0.18);
+  backdrop-filter: blur(8px);
+  pointer-events: auto;
+  box-shadow: var(--shadow);
+}
+
+.chapter-nav-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(244, 239, 230, 0.72);
+}
+
+.chapter-nav select {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: #f4efe6;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 0.35rem 1.4rem 0.35rem 0.15rem;
+  max-width: min(240px, 55vw);
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23f4efe6' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.2rem center;
+}
+
+.chapter-nav select:focus {
+  outline: 2px solid rgba(226, 177, 90, 0.7);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+.chapter-nav select option {
+  color: var(--ink);
+  background: #fffdf8;
+}
+
+.legend {
+  margin-left: auto;
+  min-width: min(240px, 70vw);
+  padding: 0.7rem 0.85rem;
+  border-radius: 14px;
+  background: rgba(255, 252, 245, 0.9);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(10px);
+  display: grid;
+  gap: 0.4rem;
+  transition: opacity 320ms ease;
+}
+
+.shake-legend {
+  min-width: 140px;
+  padding: 0.7rem 0.85rem;
+  border-radius: 14px;
+  background: rgba(15, 42, 34, 0.88);
+  border: 1px solid rgba(255, 252, 245, 0.18);
+  box-shadow: var(--shadow);
+  color: #f4efe6;
+  display: grid;
+  gap: 0.4rem;
+}
+
+.shake-legend[hidden] {
+  display: none;
+}
+
+.shake-legend .legend-title {
+  color: #e2b15a;
+}
+
+.shake-scale {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 3px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.shake-scale span {
+  display: grid;
+  place-items: center;
+  height: 22px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #141c1a;
+}
+
+.shake-credit {
+  margin: 0;
+  font-size: 0.65rem;
+  color: rgba(244, 239, 230, 0.7);
+}
+
+.legend-title {
+  margin: 0;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--forest);
+}
+
+.legend-scale {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 3px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.legend-swatch {
+  height: 12px;
+}
+
+.legend-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.68rem;
+  color: var(--ink-soft);
+}
+
+.legend-note {
+  margin: 0;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  color: var(--ink-soft);
+}
+
+.belt-legend {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.belt-legend span {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+}
+
+.belt-legend i {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  display: inline-block;
+}
+
+.reset-view {
+  pointer-events: auto;
+  appearance: none;
+  border: 1px solid rgba(255, 252, 245, 0.35);
+  border-radius: 999px;
+  background: rgba(15, 42, 34, 0.75);
+  color: #f4efe6;
+  font: inherit;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.45rem 0.85rem;
+  cursor: pointer;
+  transition: background 160ms ease, transform 160ms ease;
+}
+
+.quake-wiki-btn {
+  pointer-events: auto;
+  appearance: none;
+  border: 1px solid rgba(226, 177, 90, 0.55);
+  border-radius: 999px;
+  background: rgba(158, 21, 40, 0.92);
+  color: #fff8f0;
+  font: inherit;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.45rem 0.85rem;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: background 160ms ease, transform 160ms ease;
+}
+
+.quake-wiki-btn[hidden] {
+  display: none;
+}
+
+.quake-wiki-btn:hover,
+.reset-view:hover {
+  background: rgba(158, 21, 40, 0.95);
+  transform: translateY(-1px);
+}
+
+.maplibregl-popup-content {
+  padding: 0.7rem 0.85rem;
+  border-radius: 12px;
+  font-family: var(--font-body);
+  box-shadow: var(--shadow);
+}
+
+.maplibregl-popup-content strong {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+}

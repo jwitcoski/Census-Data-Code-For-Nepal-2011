@@ -1,0 +1,108 @@
+/* Explore coda: metric picker, national stats, district inspector. */
+
+.explore-step {
+  min-height: auto;
+  padding-bottom: 8vh;
+}
+
+.field {
+  display: grid;
+  gap: 0.45rem;
+  margin-top: 1.5rem;
+  max-width: 34ch;
+}
+
+.field span {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--forest);
+}
+
+.field select {
+  appearance: none;
+  border: 1px solid rgba(20, 28, 26, 0.18);
+  border-radius: 12px;
+  background: #fffdf8;
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.95rem;
+  padding: 0.75rem 0.9rem;
+  cursor: pointer;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.field select:hover,
+.field select:focus {
+  border-color: var(--crimson);
+  box-shadow: 0 0 0 3px rgba(158, 21, 40, 0.12);
+  outline: none;
+}
+
+.national {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  margin: 1.35rem 0 0;
+  padding: 0.95rem 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  max-width: 34ch;
+}
+
+.national div {
+  margin: 0;
+}
+
+.national dt {
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.national dd {
+  margin: 0.25rem 0 0;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.detail {
+  margin-top: 1.25rem;
+  animation: rise 280ms ease;
+  max-width: 34ch;
+}
+
+.detail h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.55rem;
+}
+
+.detail-meta {
+  margin: 0.25rem 0 0.75rem;
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+}
+
+.detail dl {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.65rem 0.85rem;
+  margin: 0;
+}
+
+.detail dt {
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.detail dd {
+  margin: 0.15rem 0 0;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}

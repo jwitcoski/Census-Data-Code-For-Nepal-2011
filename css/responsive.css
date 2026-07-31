@@ -1,0 +1,78 @@
+/* Mobile layout + reduced-motion overrides. */
+
+@media (max-width: 900px) {
+  .story {
+    display: block;
+  }
+
+  .map-stage {
+    position: sticky;
+    top: 0;
+    height: 48vh;
+    z-index: 1;
+  }
+
+  .narrative {
+    margin-top: -2rem;
+    border-right: 0;
+    border-radius: 22px 22px 0 0;
+    background: rgba(242, 238, 228, 0.97);
+    box-shadow: 0 -12px 40px rgba(15, 28, 24, 0.18);
+  }
+
+  .step {
+    min-height: auto;
+    padding: 2.75rem 1.35rem;
+  }
+
+  .hero-step {
+    min-height: 52vh;
+    padding-top: 2.5rem;
+  }
+
+  .map-chrome {
+    top: 0.65rem;
+    right: 0.65rem;
+    left: 0.65rem;
+  }
+
+  .legend {
+    min-width: 0;
+    flex: 1 1 160px;
+  }
+
+  .wiki-panel {
+    left: 0.65rem;
+    right: 0.65rem;
+    bottom: 0.5rem;
+    width: auto;
+    max-height: 36vh;
+    padding: 0.75rem 0.85rem;
+  }
+
+  .wiki-thumb {
+    max-height: 72px;
+  }
+
+  .reset-view {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .step,
+  .detail,
+  .chapter-nav,
+  .scroll-cta,
+  .next-btn,
+  .wiki-open,
+  .reset-view,
+  .field select {
+    animation: none;
+    transition: none;
+  }
+}

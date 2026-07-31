@@ -1,0 +1,50 @@
+/* Design tokens, base reset, shared keyframes. */
+
+:root {
+  --ink: #141c1a;
+  --ink-soft: #4a5652;
+  --paper: #f2eee4;
+  --crimson: #9e1528;
+  --crimson-deep: #6e101c;
+  --forest: #1a4538;
+  --forest-deep: #0f2a22;
+  --gold: #b8842a;
+  --line: rgba(20, 28, 26, 0.12);
+  --shadow: 0 22px 60px rgba(15, 28, 24, 0.22);
+  --map-fill: #d4ddd8;
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Sora", "Segoe UI", sans-serif;
+  --narrative-width: min(420px, 92vw);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  color: var(--ink);
+  font-family: var(--font-body);
+  background: var(--forest-deep);
+}
+
+a {
+  color: var(--crimson-deep);
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

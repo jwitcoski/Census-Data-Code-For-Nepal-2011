@@ -1,0 +1,139 @@
+/* District markers and landmark / belt / place labels. */
+
+.district-label {
+  pointer-events: none;
+  padding: 0.28rem 0.55rem;
+  border-radius: 999px;
+  background: rgba(255, 252, 245, 0.94);
+  border: 1px solid rgba(110, 16, 28, 0.35);
+  color: var(--crimson-deep);
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  box-shadow: 0 8px 22px rgba(15, 28, 24, 0.18);
+}
+
+.landmark-overlay {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.landmark-overlay .region-label {
+  position: absolute;
+  left: 0;
+  top: 0;
+  will-change: transform;
+  pointer-events: auto;
+}
+
+.region-label {
+  position: relative;
+  appearance: none;
+  border: 1px solid rgba(255, 252, 245, 0.2);
+  padding: 0.45rem 0.85rem;
+  border-radius: 999px;
+  background: rgba(15, 42, 34, 0.88);
+  color: #f4efe6;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  box-shadow: 0 12px 28px rgba(15, 28, 24, 0.28);
+  cursor: help;
+}
+
+.region-label--place {
+  background: var(--crimson);
+  border-color: transparent;
+}
+
+.region-label:focus {
+  outline: 2px solid rgba(226, 177, 90, 0.8);
+  outline-offset: 2px;
+}
+
+.region-label-text {
+  display: block;
+}
+
+.region-tooltip {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 10px);
+  transform: translateX(-50%) translateY(4px);
+  width: min(260px, 70vw);
+  padding: 0.75rem 0.85rem;
+  border-radius: 12px;
+  background: rgba(255, 252, 245, 0.97);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 160ms ease, transform 160ms ease, visibility 160ms ease;
+  white-space: normal;
+  text-transform: none;
+  letter-spacing: 0;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 400;
+  line-height: 1.45;
+  z-index: 20;
+}
+
+.region-tooltip strong {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--crimson-deep);
+}
+
+.region-label:hover .region-tooltip,
+.region-label:focus .region-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+.region-label--neighbor {
+  background: rgba(20, 28, 26, 0.72);
+  border: 1px dashed rgba(244, 239, 230, 0.45);
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  font-family: var(--font-body);
+  font-weight: 600;
+}
+
+.region-label--peak {
+  background: rgba(255, 252, 245, 0.94);
+  color: var(--crimson-deep);
+  border: 1px solid rgba(110, 16, 28, 0.3);
+  letter-spacing: 0.08em;
+}
+
+.region-label--belt {
+  background: rgba(15, 42, 34, 0.9);
+  border: 1px solid rgba(255, 252, 245, 0.28);
+  cursor: pointer;
+}
+
+.region-label--belt:hover,
+.region-label--belt:focus {
+  background: var(--crimson);
+  border-color: transparent;
+}
+
+.region-label--place .region-tooltip strong {
+  color: var(--crimson);
+}
