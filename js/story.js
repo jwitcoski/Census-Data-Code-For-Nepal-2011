@@ -9,9 +9,19 @@ import { map } from "./map.js";
 import { dom, state } from "./state.js";
 import { syncWikiPanel } from "./wiki.js";
 
+function isMobileLayout() {
+  return window.matchMedia("(max-width: 900px)").matches;
+}
+
 export function fitChapterBounds(bounds) {
-  const padding = window.matchMedia("(max-width: 900px)").matches
-    ? { top: 48, bottom: 24, left: 24, right: 24 }
+  /* On mobile, step cards overlap the lower portion of the sticky map. */
+  const padding = isMobileLayout()
+    ? {
+        top: 56,
+        bottom: Math.round(window.innerHeight * 0.28),
+        left: 20,
+        right: 20,
+      }
     : { top: 56, bottom: 120, left: 48, right: 48 };
   return new Promise((resolve) => {
     const done = () => resolve();
@@ -99,12 +109,14 @@ export function jumpToChapter(chapterId) {
   activateChapter(chapterId);
   target?.scrollIntoView({
     behavior: state.reduceMotion ? "auto" : "smooth",
-    block: "start",
+    /* Mobile cards sit under the sticky map; center keeps them readable. */
+    block: isMobileLayout() ? "center" : "start",
   });
 }
 
 export function observeChapters() {
   const ratios = new Map();
+  const mobile = isMobileLayout();
 
   const observer = new IntersectionObserver(
     (entries) => {
@@ -122,14 +134,15 @@ export function observeChapters() {
         }
       });
 
-      if (bestStep && bestRatio > 0.15) {
+      if (bestStep && bestRatio > 0.12) {
         activateChapter(bestStep.dataset.chapter);
       }
     },
     {
       root: null,
-      threshold: [0.15, 0.35, 0.55, 0.75],
-      rootMargin: "-10% 0px -35% 0px",
+      threshold: [0.12, 0.25, 0.4, 0.55, 0.75],
+      /* Mobile: bias toward the lower viewport where step cards float. */
+      rootMargin: mobile ? "-8% 0px -42% 0px" : "-10% 0px -35% 0px",
     }
   );
 
