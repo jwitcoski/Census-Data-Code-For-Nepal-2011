@@ -58,11 +58,19 @@
 
   .hero-step {
     min-height: auto;
-    max-height: 58vh;
-    max-height: 58dvh;
+    max-height: 48vh;
+    max-height: 48dvh;
     margin-top: 0;
-    padding-top: 1.15rem;
+    padding-top: 1.05rem;
     opacity: 1;
+  }
+
+  .hero-step .world-locator {
+    max-width: 220px;
+  }
+
+  .hero-step .world-locator figcaption {
+    display: none;
   }
 
   .explore-step {
@@ -158,14 +166,18 @@
     padding: 0.45rem 0.65rem;
   }
 
+  /* When opened via the chapter CTA, dock over the lower text band. */
   .wiki-panel {
-    left: 0.55rem;
-    right: 0.55rem;
-    bottom: 0.45rem;
+    position: fixed;
+    left: 0.65rem;
+    right: 0.65rem;
+    top: auto;
+    bottom: 0.75rem;
     width: auto;
-    max-height: 34vh;
-    max-height: 34dvh;
+    max-height: 42vh;
+    max-height: 42dvh;
     padding: 0.7rem 0.8rem;
+    z-index: 20;
   }
 
   .wiki-thumb {

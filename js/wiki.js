@@ -104,6 +104,10 @@ export function hideWikiPanel() {
   dom.wikiPanel.hidden = true;
 }
 
+function isMobileLayout() {
+  return window.matchMedia("(max-width: 900px)").matches;
+}
+
 export function syncWikiPanel(chapter, previousChapterId) {
   const previousWiki = previousChapterId
     ? CHAPTERS[previousChapterId]?.wiki
@@ -112,8 +116,16 @@ export function syncWikiPanel(chapter, previousChapterId) {
     state.wikiUserClosed = false;
   }
 
+  /*
+   * On mobile the sticky map is only ~half the viewport. Auto-opening the
+   * Wikipedia panel covers the choropleth — wait for an explicit tap instead.
+   */
   if (chapter.wiki) {
-    if (!state.wikiUserClosed) showWikiPanel(chapter.wiki);
+    if (!state.wikiUserClosed && !isMobileLayout()) {
+      showWikiPanel(chapter.wiki);
+    } else if (isMobileLayout() && !state.wikiUserClosed) {
+      hideWikiPanel();
+    }
   } else {
     hideWikiPanel();
   }
