@@ -6,23 +6,23 @@
   }
 
   /*
-   * Keep the map sticky and visible while chapter cards scroll over its
-   * lower edge. An opaque full-column narrative was covering the map entirely.
+   * Keep the map sticky in the top band. Chapter cards float in the lower
+   * band with a height cap so long copy cannot cover the choropleth.
    */
   .map-stage {
     position: sticky;
     top: 0;
-    height: 52vh;
-    height: 52dvh;
+    height: 48vh;
+    height: 48dvh;
     z-index: 1;
   }
 
   .narrative {
     position: relative;
     z-index: 2;
-    margin-top: -14vh;
-    margin-top: -14dvh;
-    padding: 0 0 12vh;
+    margin-top: -10vh;
+    margin-top: -10dvh;
+    padding: 0 0 8vh;
     border-right: 0;
     border-radius: 0;
     background: transparent;
@@ -31,16 +31,24 @@
 
   .step {
     min-height: auto;
-    margin: 0 0.85rem 58vh;
-    margin-bottom: 58dvh;
-    padding: 1.35rem 1.2rem 1.45rem;
+    max-height: 50vh;
+    max-height: 50dvh;
+    margin: 0 0.85rem 52vh;
+    margin-bottom: 52dvh;
+    padding: 1.15rem 1.1rem 1.2rem;
     justify-content: flex-start;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
     border-radius: 18px;
     background: rgba(242, 238, 228, 0.97);
     border: 1px solid rgba(20, 28, 26, 0.08);
     box-shadow: 0 14px 36px rgba(15, 28, 24, 0.2);
-    opacity: 0.72;
+    opacity: 0.78;
     transform: none;
+    scroll-margin-top: 46vh;
+    scroll-margin-top: 46dvh;
   }
 
   .step.is-active {
@@ -50,32 +58,46 @@
 
   .hero-step {
     min-height: auto;
+    max-height: 58vh;
+    max-height: 58dvh;
     margin-top: 0;
-    padding-top: 1.35rem;
+    padding-top: 1.15rem;
     opacity: 1;
   }
 
   .explore-step {
+    max-height: none;
     margin-bottom: 2.5rem;
+    overflow: visible;
   }
 
   .step h2 {
     max-width: none;
-    font-size: clamp(1.55rem, 7vw, 2.1rem);
+    font-size: clamp(1.45rem, 6.5vw, 1.95rem);
   }
 
   .step p,
-  .hero-lede,
+  .hero-lede {
+    max-width: none !important;
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
+
   .punchline {
     max-width: none !important;
+    font-size: 1.05rem !important;
   }
 
   .world-locator {
+    max-width: 100%;
+  }
+
+  .world-locator figcaption {
     max-width: none;
   }
 
   .step-nav {
-    margin-top: 1.35rem;
+    margin-top: 1.15rem;
   }
 
   .scroll-cta,
@@ -89,7 +111,7 @@
     top: 0.55rem;
     right: 0.55rem;
     left: 0.55rem;
-    gap: 0.5rem;
+    gap: 0.45rem;
   }
 
   .chapter-nav {
@@ -105,22 +127,35 @@
     margin-left: 0;
     min-width: 0;
     flex: 1 1 100%;
-    padding: 0.55rem 0.7rem;
+    padding: 0.45rem 0.65rem;
+    gap: 0.25rem;
+  }
+
+  .legend-scale {
+    gap: 2px;
+  }
+
+  .legend-swatch {
+    height: 8px;
   }
 
   .legend-title {
-    font-size: 0.62rem;
+    font-size: 0.6rem;
   }
 
   .legend-labels,
   .legend-note {
-    font-size: 0.62rem;
+    font-size: 0.6rem;
+  }
+
+  .legend-note {
+    display: none;
   }
 
   .shake-legend {
     flex: 1 1 auto;
     min-width: 0;
-    padding: 0.55rem 0.7rem;
+    padding: 0.45rem 0.65rem;
   }
 
   .wiki-panel {
@@ -161,7 +196,12 @@
   }
 
   .skills {
+    width: 100%;
     padding: 3.25rem 1.25rem 4rem;
+  }
+
+  .skills-inner {
+    max-width: none;
   }
 
   .skills h2 {
@@ -187,7 +227,7 @@
   .step {
     margin-left: 0.65rem;
     margin-right: 0.65rem;
-    padding: 1.2rem 1.05rem 1.3rem;
+    padding: 1.1rem 1rem 1.15rem;
   }
 
   .step-nav {
