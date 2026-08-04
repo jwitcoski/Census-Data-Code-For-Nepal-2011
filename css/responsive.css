@@ -58,18 +58,15 @@
 
   .hero-step {
     min-height: auto;
-    max-height: 48vh;
-    max-height: 48dvh;
+    max-height: 42vh;
+    max-height: 42dvh;
     margin-top: 0;
     padding-top: 1.05rem;
     opacity: 1;
   }
 
+  /* MapLibre map is the hero visual on mobile; skip the inset duplicate. */
   .hero-step .world-locator {
-    max-width: 220px;
-  }
-
-  .hero-step .world-locator figcaption {
     display: none;
   }
 
