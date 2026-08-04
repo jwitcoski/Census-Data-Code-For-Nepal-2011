@@ -185,6 +185,10 @@
     display: none;
   }
 
+  .quake-wiki-btn {
+    display: none;
+  }
+
   .maplibregl-ctrl-bottom-right {
     margin-bottom: 0.35rem;
   }
